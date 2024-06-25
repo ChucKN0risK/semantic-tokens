@@ -1,0 +1,96 @@
+// ========================================================================================
+// Base | Default, single element selectors that will look the same regardless of location.
+// ========================================================================================
+:root {
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  min-height: 100vh;
+  text-size-adjust: 100%;
+  // Mobile First Approach
+  // Refer to https://prowebtype.com/setting-type/
+  font-family: var(--base-font-family);
+  font-size: 100%;
+  font-weight: 400;
+  text-align: left;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+// Make scrollbars black
+// https://twitter.com/diegohaz/status/1529543787311144961
+:root {
+  @media (prefers-color-scheme: dark) {
+    color-scheme: dark;
+  }
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+// ---------------------------------
+// GENERAL SETTINGS
+// ---------------------------------
+body {
+  display: flex;
+  place-items: center;
+  min-height: 100vh;
+  font-family: var(--base-font-family);
+}
+
+#app {
+  display: flex;
+  @include size(100%);
+
+  @media screen and (max-width: 40rem) {
+    flex-direction: column;
+  }
+}
+
+// input, button {
+//   border-radius: var(--general-border-radius);
+// }
+
+input,
+button,
+textarea,
+:focus {
+  // You should add some other style for :focus to help UX/a11y
+  outline: none;
+}
+
+main {
+  @include flex-absolute-center;
+  padding: 2rem;
+  width: 100%;
+  background-color: var(--background-surface-surface-2);
+}
+
+.container {
+  width: min(100%, 400px);
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--base-space-10);
+  background-color: var(--background-component-parent);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-component-lightest-border);
+  box-shadow: var(--shadow-component-default);
+}
+
+aside {
+  padding: 1rem;
+  
+  @media screen and (min-width: 40rem) {
+    order: -1;
+  }
+}
