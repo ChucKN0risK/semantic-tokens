@@ -1,25 +1,37 @@
-<Stack class="m-input m-input--{size}" spaceUnit="2" axis="y">
-  <Text
-    tag={'label'}
-    text={name}
-    for={kebabcasify(name)}
-  />
+<Stack
+  class="m-input m-input--{size} {className}"
+  {...$$restProps}
+  spaceUnit="2"
+  axis="y"
+>
   <input
     id={kebabcasify(name)}
     type={type}
     placeholder={placeholder}
+    on:input={emitValue}
   />
 </Stack>
 
-<script>
-  import Text from '@/components/01-atoms/Text.svelte';
+<script lang="ts">
   import Stack from '@/components/01-atoms/Stack.svelte';
   import { kebabcasify } from '@/utils/kebabcasify';
+  import { createEventDispatcher } from 'svelte';
 
   export let name = '';
   export let size = 'medium';
   export let type = 'text';
   export let placeholder = 'text';
+  let className = '';
+  export { className as class }
+
+  const dispatch = createEventDispatcher();
+
+  function emitValue(e: Event) {
+    const value = (e.target as HTMLSelectElement).value;
+    if (!value) return;
+    console.log(value)
+    dispatch('value-change', value);
+  }
 </script>
 
 <style lang="scss">
@@ -74,40 +86,33 @@
       --input-box-shadow: var(--base-form-element-shadow-focused);
     }
 
-    &:not(:placeholder-shown).has-message--error {
-      --input-border-color: var(--border-component-error);
+    // &.has-message--error {
+    //   --input-border-color: var(--border-component-error);
 
-      &:focus-within {
-        --input-box-shadow: var(--base-form-element-shadow-focused-destructive);
-      }
-    }
+    //   &:focus-within {
+    //     --input-box-shadow: var(--base-form-element-shadow-focused-destructive);
+    //   }
+    // }
 
     // &:not(.has-icon-on-right):not(.has-text-prefix) {
     //   & > * + * {
     //     margin-left: var(--base-space-2);
     //   }
     // }
+  }
 
-    // &.has-icon-on-right {
-    //   .m-sp-input__icon {
-    //     order: 1;
-    //     margin-left: auto;
-    //   }
+  :global(.m-input:not(:placeholder-shown).has-message--error) {
+    --input-border-color: var(--border-component-error);
+    &:focus-within {
+      --input-box-shadow: var(--base-form-element-shadow-focused-destructive);
+    }
+  }
 
-    //   & > * + * {
-    //     margin-right: var(--base-space-2);
-    //   }
-    // }
-
-    // &.is-disabled {
-    //   --input-background-color: var(--base-form-element-background-color-disabled);
-    //   --input-text-color: var(--text-low-emphasis);
-    //   cursor: not-allowed;
-
-    //   & input {
-    //     pointer-events: none;
-    //   }
-    // }
+  :global(.m-input.has-icon-on-right) {
+    .m-sp-input__icon {
+      order: 1;
+      margin-left: auto;
+    }
   }
 
   // ---------------------------
