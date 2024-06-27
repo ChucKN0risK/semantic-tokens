@@ -1,4 +1,14 @@
-<button class="m-button m-button--{look} m-button--{size} {contentCentered ? 'm-button--content-centered' : false}">
+<button
+  {...$$restProps}
+  class="
+    m-button
+    m-button--{look}
+    m-button--{size}
+    {contentCentered ? 'm-button--content-centered' : false}
+  ">
+  {#if icon}
+    <Vector class="m-button__icon" glyph={icon} />
+  {/if}
   <span class="m-button__text">
     {#if !text}
       <slot />
@@ -7,12 +17,23 @@
       <span>{ text }</span>
     {/if}
   </span>
+  {#if isLoading}
+    <Vector
+      class="m-button__icon is-rotating"
+      glyph="loader"
+      color={look === 'primary' ? 'icon-on-colored-bg' : 'icon-default'}
+    />
+  {/if}
 </button>
 
-<script>
+<script lang="ts">
+  import Vector from '@/components/01-atoms/Vector.svelte';
+
   export let look = 'primary';
   export let size = 'medium';
-  export let text = '';
+  export let text: string = '';
+  export let icon: string = '';
+  export let isLoading: boolean = false;
   export let contentCentered = true;
 </script>
 
@@ -41,6 +62,7 @@
     @include transition((color, width, height, background-color));
     will-change: background-color;
     cursor: pointer;
+    gap: var(--base-space-2);
 
     &:not(:focus):not(.m-button--text):not(.m-button--icon):not(.m-button--warning) {
       box-shadow: var(--shadow-button-default);
@@ -63,11 +85,6 @@
 
     &:active {
       box-shadow: var(--shadow-button-active);
-    }
-
-    .m-button__icon + .m-button__text,
-    .m-button__text + .m-button__icon {
-      margin-left: var(--base-space-2);
     }
   }
 
@@ -180,159 +197,6 @@
     }
   }
 
-  .m-button--text {
-    --background-color: transparent;
-    --border-color: transparent;
-    --text-color: var(--text-high-emphasis);
-
-    color: var(--text-color);
-    background-color: var(--background-color);
-    border: var(--border-width) solid var(--border-color);
-
-    svg {
-      fill: currentColor;
-    }
-
-    &[disabled] {
-      --text-color: var(--text-low-emphasis);
-    }
-
-    &:not(.is-disabled).is-destructive {
-      --text-color: var(--text-error);
-
-      &:hover {
-        --background-color: var(--background-button-destructive-text-hover);
-      }
-
-      &:active {
-        --text-color: var(--text-on-colored-bg);
-        --background-color: var(--background-button-destructive-active);
-      }
-
-      &:focus {
-        box-shadow: 0px 0px 0px 3px var(--border-button-destructive-focused);
-      }
-    }
-
-    &:hover {
-      --background-color: var(--background-button-secondary-hover);
-    }
-
-    &:active {
-      --background-color: var(--background-button-secondary-active);
-    }
-
-    &:focus {
-      box-shadow: 0px 0px 0px 3px var(--border-button-secondary-default);
-    }
-
-    .m-button__text {
-      @include text-body-m;
-    }
-  }
-
-  .m-button--warning {
-    --background-color: var(--background-button-warning-default);
-    --text-color: var(--text-high-emphasis);
-    --border-color: transparent;
-
-    color: var(--text-color);
-    background-color: var(--background-color);
-    border: 2px solid var(--border-color);
-
-    svg {
-      fill: currentColor;
-    }
-
-    &[disabled] {
-      --text-color: var(--text-low-emphasis);
-      --background-color: var(--background-button-secondary-hover);
-    }
-
-    &:hover {
-      --background-color: var(--background-button-warning-default);
-      --border-color: var(--border-button-warning-hover);
-    }
-
-    &:active {
-      --background-color: var(--background-button-warning-active);
-      --border-color: var(--border-button-warning-hover);
-    }
-
-    &:focus {
-      box-shadow: var(--shadow-component-focused-purple-structured);
-    }
-
-    .m-button__text {
-      @include text-body-m;
-    }
-  }
-
-  .m-button--icon {
-    --background-color: transparent;
-    --border-color: transparent;
-    --text-color: var(--icon-default);
-
-    color: var(--text-color);
-    background-color: var(--background-color);
-
-    svg {
-      fill: currentColor;
-    }
-
-    &[disabled] {
-      --text-color: var(--icon-disabled);
-    }
-
-    &:not(.is-disabled).is-destructive {
-      --text-color: var(--text-error);
-
-      &:hover {
-        --background-color: var(--background-button-destructive-text-hover);
-      }
-
-      &:active {
-        --text-color: var(--text-on-colored-bg);
-        --background-color: var(--background-button-destructive-active);
-      }
-
-      &:focus {
-        box-shadow: 0px 0px 0px 3px var(--border-button-destructive-focused);
-      }
-    }
-
-    &:hover {
-      --background-color: var(--background-button-secondary-hover);
-    }
-
-    &:active {
-      --background-color: var(--background-button-secondary-active);
-    }
-
-    &:focus {
-      box-shadow: 0px 0px 0px 3px var(--border-button-secondary-default);
-    }
-  }
-
-  // ToDo
-  // These classes seem to repeat the rules applied
-  // in the default .m-button class but they're used
-  // when an icon needs to be displayed at a custom size
-  // and not via a prop.
-  .m-button__icon-left {
-    svg {
-      margin-right: var(--base-space-2);
-    }
-  }
-
-  .m-button__icon-right {
-    flex-direction: row-reverse;
-
-    svg {
-      margin-left: var(--base-space-2);
-    }
-  }
-
   // ---------------------------
   // SIZES
   // ---------------------------
@@ -348,34 +212,8 @@
     --button-height: var(--base-space-10);
   }
 
-  .m-button--full-width {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .m-button--squared {
-    padding: 0;
-    @include size(var(--button-height));
-    @include flex-absolute-center;
-  }
-
   .m-button--content-centered {
     display: flex;
     justify-content: center;
-  }
-
-  .m-button--without-background {
-    background-color: transparent;
-    border: none;
-  }
-
-  // ---------------------------
-  // STATE
-  // ---------------------------
-  .m-button.is-loading {
-    .m-button__icon--loading {
-      animation: rotating 1s linear infinite;
-      fill: var(--color-primary);
-    }
   }
 </style>
