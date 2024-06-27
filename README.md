@@ -14,6 +14,12 @@ Use existing CSS variables from your design system and tweak the style of your c
 1. `yarn` (to install all dependencies)
 2. `yarn dev`
 
+## Code architecture
+- Created with [Svelte](svelte.dev) and TypeScript
+- Design tokens created as CSS variables
+- Style written in SCSS and organized following [the SMACSS architecture](http://smacss.com/) and [ITCSS from Harry Roberts](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/).
+- Components organized following the [Atomic Design taxonomy by Brad Frost](https://bradfrost.com/blog/post/atomic-web-design/)
+
 ## To Do
 - [x] Create Text component
 - [x] Style input
@@ -27,4 +33,5 @@ Use existing CSS variables from your design system and tweak the style of your c
   - [x] Change container, input, and button border radius
   - [] Change text style font size
   - [x] Change input/button height
-- [] Replace select by input range
+- Update README
+  - [x] Add SMACSS architecture info + Inverted Triangle CSS by Harry Roberts
