@@ -97,7 +97,7 @@ aside {
   @media screen and (min-width: 60rem) {
     --box-shadow: var(--shadow-component-solid-right);
     order: -1;
-    max-width: 30vw;
+    width: min(20rem, 30vw);
   }
 
   section {
