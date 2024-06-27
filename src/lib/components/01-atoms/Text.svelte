@@ -1,6 +1,13 @@
-<svelte:element this={tag} {...$$restProps} class="a-text--{type} {className}" style:color={color ? `var(--${color})` : null}>
-  {text}
-</svelte:element>
+{#if text}
+  <svelte:element this={tag} {...$$restProps} class="a-text--{type} {className}" style:color={color ? `var(--${color})` : null}>
+    {@html text}
+  </svelte:element>
+{/if}
+{#if !text}
+  <svelte:element this={tag} {...$$restProps} class="a-text--{type} {className}" style:color={color ? `var(--${color})` : null}>
+    <slot />
+  </svelte:element>
+{/if}
 
 <script>
   export let tag = 'p';
