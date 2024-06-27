@@ -1,4 +1,11 @@
-<div class="a-vector {className}" style="color: var(--{color}); width: var(--base-space-{width}); height: var(--base-space-{height});">
+<div
+  class="a-vector {className}"
+  style="
+    color: var(--{color});
+    { width ? `width: var(--base-space-${width});` : '' }
+    { height ? `height: var(--base-space-${height});` : '' }
+  "
+>
   {#await file() then value}
     {@html value.default}
   {/await}
@@ -7,8 +14,8 @@
 <script lang="ts">
   export let glyph: string = '';
   export let color: string = 'icon-default';
-  export let width: number | undefined =  undefined;
-  export let height: number | undefined =  undefined;
+  export let width: number | null =  null;
+  export let height: number | null =  null;
   let className = '';
   export { className as class }
   // I need to better understand how dynamic
