@@ -52,7 +52,7 @@ body {
   display: flex;
   @include size(100%);
 
-  @media screen and (max-width: 40rem) {
+  @media screen and (max-width: 60rem) {
     flex-direction: column;
   }
 }
@@ -71,6 +71,7 @@ textarea,
 
 main {
   @include flex-absolute-center;
+  flex: 1;
   padding: 2rem;
   width: 100%;
   background-color: var(--background-surface-surface-2);
@@ -88,9 +89,39 @@ main {
 }
 
 aside {
-  padding: 1rem;
-  
-  @media screen and (min-width: 40rem) {
+  --box-shadow: var(--shadow-component-solid-top);
+  background-color: var(--background-component-parent);
+  box-shadow: var(--box-shadow);
+  z-index: 10;
+
+  @media screen and (min-width: 60rem) {
+    --box-shadow: var(--shadow-component-solid-right);
     order: -1;
+    max-width: 30vw;
   }
+
+  section {
+    padding: 1rem;
+  }
+  
+  section + section {
+    box-shadow: var(--shadow-component-solid-top);
+  }
+}
+
+a {
+  color: var(--text-info);
+}
+
+@keyframes rotate {
+  from {
+    transform: none;
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.is-rotating {
+  animation: rotate 1s infinite linear;
 }
