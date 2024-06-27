@@ -1,4 +1,6 @@
 # Semantic tokens in action
+🌐 View app at https://semantic-tokens-44u9.vercel.app/
+
 Design tokens can be organized in the following tiers:
 1. Core/Primitive
 2. Semantic
